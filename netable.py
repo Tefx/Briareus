@@ -1,4 +1,4 @@
-import zmq
+from gevent_zeromq import zmq
 import ujson as serlib
 import snappy
 
