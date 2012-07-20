@@ -43,4 +43,4 @@ class Broker(object):
 
 
 if __name__ == '__main__':
-	Broker("ipc://clientend", "ipc://serverend").run()
+	Broker("tcp://*:8858", "tcp://*:8859").run()

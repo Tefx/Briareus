@@ -31,6 +31,6 @@ if __name__ == '__main__':
 	# 	h = dot(f,g)
 	# 	print h(i)
 
-	# c = worker.Caller("tcp://192.168.10.120:8858")
+	# c = worker.Caller("tcp://192.168.70.101:8858")
 	# print c.eval(g, 10)
 	# c.shutdown()
