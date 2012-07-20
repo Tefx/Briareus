@@ -18,7 +18,7 @@ def dot(f, g):
 	return lambda x: f(g(x))
 
 def test(i):
-	c = worker.Caller("ipc://clientend")
+	c = worker.Caller("tcp://192.168.70.101:8858")
 	h = dot(f,g)
 	print c.eval(h, i)
 	c.shutdown()
@@ -26,3 +26,11 @@ def test(i):
 if __name__ == '__main__':
 	jobs = [gevent.spawn(test, i) for i in xrange(100)]
 	gevent.joinall(jobs)
+
+	# for i in xrange(100):
+	# 	h = dot(f,g)
+	# 	print h(i)
+
+	# c = worker.Caller("tcp://192.168.10.120:8858")
+	# print c.eval(g, 10)
+	# c.shutdown()
