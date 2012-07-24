@@ -10,4 +10,4 @@ if __name__ == '__main__':
 	proxy_addr = "%s://%s:%d" % (PROXY_WORKEREND_TYPE,
 								 PROXY_WORKEREND_ADDR,
 								 PROXY_WORKEREND_PORT)
-	Netable(Worker).run(proxy_addr, False)
+	Netable(Worker, proxy_addr).run(proxy_addr, False)
