@@ -9,16 +9,21 @@ import time
 import gevent
 
 def f(x):
-	for i in xrange(1000000):
+	for i in xrange(10000000):
 		x += sin(x)
 	return x
 
 @Briareus.cloud
 def g(x):
-	return math.pow(x, 2)
+	return map(id, range(100))
 
 def dot(f, g):
 	return lambda x: f(g(x))
 
+@Briareus.cloud
+def test():
+	return map(f, xrange(3))
+
 if __name__ == '__main__':
 	print g(10)
+	# print Briareus.eval(str, 10)

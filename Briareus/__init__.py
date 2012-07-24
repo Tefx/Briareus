@@ -3,7 +3,7 @@ from epickle import Pickler
 
 __all__ = ['cloud', 'eval']
 
-client = Client("tcp://210.72.68.189:8858")
+client = Client("tcp://localhost:8858")
 pickler = Pickler()
 
 def cloud(f):

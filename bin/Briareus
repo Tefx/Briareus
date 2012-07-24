@@ -18,7 +18,7 @@ def keep_alive():
     while is_running:
         for i in range(len(processes)):
             if not processes[i].is_running():
-                processes[i] = psutil.Popen(cmds, shell=False, stdout=PIPE)
+                processes[i] = psutil.Popen(cmd, shell=False, stdout=PIPE)
         gevent.sleep(1)
 
 def print_info():
@@ -48,7 +48,7 @@ def killall():
         except TimeoutExpired:
             p.kill()
             sleep(2)
-        if self.isalive(num):
+        if p.is_running():
             print "Fail to terminate process: [%d]" % p.pid
 
 def stop():
