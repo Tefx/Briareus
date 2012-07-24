@@ -1,8 +1,6 @@
 import sys  
 sys.path.append('..')
 import Briareus
-
-
 import math
 from math import sin
 from numpy import arange
@@ -17,7 +15,7 @@ def f(x):
 
 @Briareus.cloud
 def g(x):
-	return math.pow(x, 2)+f(abs(x))
+	return math.pow(x, 2)
 
 def dot(f, g):
 	return lambda x: f(g(x))

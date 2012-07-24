@@ -19,8 +19,8 @@ def loads(data):
     return serlib.loads(snappy.decompress(data))
 
 class Netable(object):
-    def __init__(self, C):
-        self.instance = C()
+    def __init__(self, C, *args):
+        self.instance = C(*args)
 
     def run(self, address, standalone=True):
         if standalone:
@@ -56,6 +56,12 @@ class Client(object):
 
     def shutdown(self):
         self.sock.close()
+
+def call(address, func, args):
+    sock = context.socket(zmq.REQ)
+    sock.connect(address)
+    sock.send(dumps((func, args)))
+    return loads(sock.recv())
 
 if __name__ == '__main__':
     class Test(object):
