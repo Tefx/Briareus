@@ -10,4 +10,4 @@ if __name__ == '__main__':
 									PROXY_WORKEREND_PORT)
 	clientend_addr = "%s://*:%d" % (PROXY_CLIENTEND_TYPE, 
 									PROXY_CLIENTEND_PORT)
-	Broker(workerend_addr, clientend_addr).run()
+	Broker(clientend_addr, workerend_addr).run()
