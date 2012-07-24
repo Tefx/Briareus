@@ -2,7 +2,10 @@ import struct
 import marshal
 import types
 import ctypes
-import ujson as json
+try:
+    import ujson as json
+except ImportError:
+    import json
 import pickle
 
 

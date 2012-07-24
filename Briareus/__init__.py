@@ -3,8 +3,7 @@ from epickle import Pickler
 
 __all__ = ['cloud', 'eval']
 
-
-client = Client("tcp://192.168.70.101:8858")
+client = Client("tcp://210.72.68.189:8858")
 pickler = Pickler()
 
 def cloud(f):
@@ -15,9 +14,3 @@ def cloud(f):
 
 def eval(*args):
 	return client.call("eval", map(pickler.dumps, args))
-
-if __name__ == '__main__':
-	@cloud
-	def g(x):
-		return x+1
-	print g(10)

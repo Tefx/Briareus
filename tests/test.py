@@ -1,8 +1,8 @@
 import sys  
 sys.path.append('..')
-
-
 import Briareus
+
+
 import math
 from math import sin
 from numpy import arange

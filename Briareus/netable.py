@@ -2,8 +2,10 @@ try:
     from gevent_zeromq import zmq
 except ImportError:
     import zmq
-
-import ujson as serlib
+try:
+    import ujson as serlib
+except ImportError:
+    import json as serlib
 import snappy
 
 

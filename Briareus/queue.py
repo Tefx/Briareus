@@ -40,7 +40,3 @@ class Broker(object):
 				msg = self.frontend.recv_multipart()
 				request = [self.workers.pop(0), ''] + msg
 				self.backend.send_multipart(request)
-
-
-if __name__ == '__main__':
-	Broker("tcp://*:8858", "tcp://*:8859").run()
