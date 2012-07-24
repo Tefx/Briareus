@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 import gevent
 import signal
 from sys import argv, exit
@@ -7,21 +9,12 @@ from multiprocessing import cpu_count
 from os import system
 
 
-if len(argv) != 2:
-    exit('Usage: %s address' % __file__)
-address = argv[1]
-
 is_running = True
 processes = []
-cmds = ["python2", "worker.py", address]
-
-for i in range(cpu_count()):
-    p = psutil.Popen(cmds, shell=False, stdout=PIPE)
-    p.set_cpu_affinity([i])
-    processes.append(p)
 
 def keep_alive():
     global is_running
+    global processes
     while is_running:
         for i in range(len(processes)):
             if not processes[i].is_running():
@@ -30,6 +23,7 @@ def keep_alive():
 
 def print_info():
     global is_running
+    global processes
     while is_running:
         s = ["NUM\tCPU\tMEM\tAFFINITY\tSTATUS\t\tUSERTIME\tSYSTEMTIME"]
         for p in processes:
@@ -46,6 +40,7 @@ def print_info():
         gevent.sleep(1)
 
 def killall():
+    global processes
     for p in processes:
         p.terminate()
         try:
@@ -60,11 +55,33 @@ def stop():
     global is_running
     is_running = False
 
-gevent.signal(signal.SIGTERM, stop)
-gevent.signal(signal.SIGQUIT, stop)
-gevent.signal(signal.SIGINT, stop)
-ka = gevent.spawn(keep_alive)
-pi = gevent.spawn(print_info)
-pi.join()
-ka.join()
-killall()
+
+if __name__ == '__main__':
+    if len(argv) < 2:
+        exit('Usage: %s (proxy|worker) [--view]' % __file__)
+
+    launch_type = argv[1]
+    cmd = "./%s" % launch_type
+
+    if launch_type == "worker":
+        for i in range(cpu_count()):
+            p = psutil.Popen(cmd, shell=False, stdout=PIPE)
+            p.set_cpu_affinity([i])
+            processes.append(p)
+    else:
+        p = psutil.Popen(cmd, shell=False, stdout=PIPE)
+        processes.append(p)
+
+    gevent.signal(signal.SIGTERM, stop)
+    gevent.signal(signal.SIGQUIT, stop)
+    gevent.signal(signal.SIGINT, stop)
+
+    ka = gevent.spawn(keep_alive)
+
+    if "--view" in argv:
+        pi = gevent.spawn(print_info)
+        pi.join()
+    
+    ka.join()
+    killall()
+

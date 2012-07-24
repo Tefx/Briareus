@@ -36,7 +36,8 @@ class Pickler(object):
 	ignores = ["__file__",
 			   "__package__",
 			   "__name__",
-			   "__doc__"]
+			   "__doc__",
+			   "Briareus"]
 
 	def tag(self, s, t):
 		return struct.pack(">c", chr(self.dispatch.index(t)))+s

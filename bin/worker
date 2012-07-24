@@ -1,0 +1,13 @@
+#!/usr/bin/env python2
+
+import sys  
+sys.path.append('..')
+from Briareus.worker import Worker
+from Briareus.netable import Netable
+
+if __name__ == '__main__':
+	execfile("config")
+	proxy_addr = "%s://%s:%d" % (PROXY_WORKEREND_TYPE,
+								 PROXY_WORKEREND_ADDR,
+								 PROXY_WORKEREND_PORT)
+	Netable(Worker).run(proxy_addr, False)

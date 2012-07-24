@@ -1,0 +1,13 @@
+#!/usr/bin/env python2
+
+import sys  
+sys.path.append('..')
+from Briareus.queue import Broker
+
+if __name__ == '__main__':
+	execfile("config")
+	workerend_addr = "%s://*:%d" % (PROXY_WORKEREND_TYPE, 
+									PROXY_WORKEREND_PORT)
+	clientend_addr = "%s://*:%d" % (PROXY_CLIENTEND_TYPE, 
+									PROXY_CLIENTEND_PORT)
+	Broker(workerend_addr, clientend_addr).run()
