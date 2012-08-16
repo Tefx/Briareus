@@ -6,7 +6,7 @@ import sys
 import types
 import log
 
-Logger = log.Logger(__file__)
+Logger = log.Logger("worker")
 
 class Worker(object):
 	def __init__(self, proxy_addr):

@@ -27,5 +27,5 @@ class Logger(object):
 
 
 if __name__ == '__main__':
-	l = Logger()
+	l = Logger("name")
 	l.write("test")
