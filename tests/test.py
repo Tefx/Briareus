@@ -8,6 +8,7 @@ import pickle
 import time
 import gevent
 
+#@Briareus.cloud
 def f(x):
 	for i in xrange(10000000):
 		x += sin(x)
@@ -15,7 +16,7 @@ def f(x):
 
 @Briareus.cloud
 def g(x):
-	return map(id, range(100))
+	return map(id, xrange(10))
 
 def dot(f, g):
 	return lambda x: f(g(x))

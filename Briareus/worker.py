@@ -4,6 +4,9 @@ import uuid
 import patches
 import sys
 import types
+import log
+
+Logger = log.Logger()
 
 class Worker(object):
 	def __init__(self, proxy_addr):
@@ -14,11 +17,16 @@ class Worker(object):
 		self.map = patches.gen_map(self.proxy_addr)
 
 	def eval(self, f, *args):
+		Logger.write("Task received.\tloading...")
 		func = self.pickler.loads(f)
+		Logger.write("Task loaded.\tpatch...")
 		func = self.patch(func)
 		args = map(self.pickler.loads, args)
 		try:
-			return func(*args)
+			Logger.write("Patched.\tRuning....")
+			res =  func(*args)
+			Logger.write("Task finished.")
+			return res
 		except Exception, e:
 			return e
 
