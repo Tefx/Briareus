@@ -3,7 +3,7 @@ try:
 except ImportError:
     import zmq
 try:
-    import ujson as serlib
+    import czjson as serlib
 except ImportError:
     import json as serlib
 import snappy

@@ -3,7 +3,7 @@ import marshal
 import types
 import ctypes
 try:
-    import ujson as json
+    import czjson as json
 except ImportError:
     import json
 import pickle

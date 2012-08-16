@@ -1,16 +1,11 @@
 import sys  
 sys.path.append('..')
 from Briareus import cloud
-import math
 from math import sin
-from numpy import arange
-import pickle
-import time
-import gevent
 
-@cloud
+#@cloud
 def f(x):
-	for i in xrange(10000000):
+	for i in xrange(1000000):
 		x += sin(x)
 	return x
 
