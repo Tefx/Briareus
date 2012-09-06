@@ -27,11 +27,10 @@ def print_info():
     while is_running:
         s = ["NUM\tCPU\tMEM\tAFFINITY\tSTATUS\t\tUSERTIME\tSYSTEMTIME"]
         for p in processes:
-            s.append("[%d]\t%.2f\t%.2f\t%s\t\t%8s\t%s\t\t%s" % \
+            s.append("[%d]\t%.2f\t%.2f\t%8s\t%s\t\t%s" % \
                      (processes.index(p),
                       p.get_cpu_percent(),
                       p.get_memory_percent(),
-                      ",".join(map(str, p.get_cpu_affinity())),
                       p.status,
                       p.get_cpu_times().user,
                       p.get_cpu_times().system,))
@@ -65,8 +64,9 @@ if __name__ == '__main__':
 
     if launch_type == "worker":
         for i in range(cpu_count()):
+            print i
             p = psutil.Popen(cmd, shell=False, stdout=PIPE)
-            #p.set_cpu_affinity([i])
+            p.set_cpu_affinity([i])
             processes.append(p)
     else:
         p = psutil.Popen(cmd, shell=False, stdout=PIPE)
