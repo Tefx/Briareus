@@ -2,15 +2,11 @@
 
 import sys  
 sys.path.append('..')
-from Briareus.worker import Worker
-from Briareus.netable import Netable
+from Corellia import Worker as CWorker
+from Briareus import Worker as BWorker
 
 if __name__ == '__main__':
 	execfile("config")
-	proxy_addr = "%s://%s:%d" % (PROXY_WORKEREND_TYPE,
-								 PROXY_WORKEREND_ADDR,
-								 PROXY_WORKEREND_PORT)
-	client_addr = "%s://%s:%d" % (PROXY_CLIENTEND_TYPE,
-								  PROXY_CLIENTEND_ADDR,
-								  PROXY_CLIENTEND_PORT)
-	Netable(Worker, client_addr).run(proxy_addr, False)
+	CLIENT_ADDR = (PROXY_CLIENTEND_ADDR, PROXY_CLIENTEND_PORT)
+	WORKER_ADDR = (PROXY_WORKEREND_ADDR, PROXY_WORKEREND_PORT)
+	CWorker(BWorker, CLIENT_ADDR).run(WORKER_ADDR)

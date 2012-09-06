@@ -2,12 +2,9 @@
 
 import sys  
 sys.path.append('..')
-from Briareus.queue import Broker
+
+from Corellia import Broker
 
 if __name__ == '__main__':
 	execfile("config")
-	workerend_addr = "%s://*:%d" % (PROXY_WORKEREND_TYPE, 
-									PROXY_WORKEREND_PORT)
-	clientend_addr = "%s://*:%d" % (PROXY_CLIENTEND_TYPE, 
-									PROXY_CLIENTEND_PORT)
-	Broker(clientend_addr, workerend_addr).run()
+	Broker(PROXY_CLIENTEND_PORT, PROXY_WORKEREND_PORT).run()

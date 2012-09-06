@@ -1,16 +1,12 @@
-from netable import Client
-from epickle import Pickler
+from tools import Client
+from worker import Worker
 
-__all__ = ['cloud', 'eval']
+__all__ = ['cloud', 'call', 'Worker']
 
-client = Client("tcp://210.72.68.189:8858")
-pickler = Pickler()
+client = Client(("localhost", 8858))
 
 def cloud(f):
-	def g(*args):
-		args = (f,) + args
-		return client.call("eval", map(pickler.dumps, args))
-	return g
+	return lambda *args: client.eval(f, *args)
 
-def eval(*args):
-	return client.call("eval", map(pickler.dumps, args))
+def call(f, *args):
+	return client.eval(f, *args)

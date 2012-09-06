@@ -66,7 +66,7 @@ if __name__ == '__main__':
     if launch_type == "worker":
         for i in range(cpu_count()):
             p = psutil.Popen(cmd, shell=False, stdout=PIPE)
-            p.set_cpu_affinity([i])
+            #p.set_cpu_affinity([i])
             processes.append(p)
     else:
         p = psutil.Popen(cmd, shell=False, stdout=PIPE)
