@@ -2,8 +2,6 @@
 
 .DS_Store
 
-tests/.test.py.swp
-
 *.log
 
 Corellia/
