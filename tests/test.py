@@ -10,13 +10,14 @@ def f(x):
 		x += sin(x)
 	return x
 
-@cloud
+#@cloud
 def g(x):
-	return map(f, xrange(10))
+	return map(f, xrange(30))
 
 def dot(f, g):
 	return lambda x: f(g(x))
 
+#@cloud
 def add(a, b):
 	return a+b
 

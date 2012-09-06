@@ -3,7 +3,7 @@ from worker import Worker
 
 __all__ = ['cloud', 'call', 'Worker']
 
-client = Client(("localhost", 8858))
+client = Client(("210.72.68.189", 8858))
 
 def cloud(f):
 	return lambda *args: client.eval(f, *args)
