@@ -10,14 +10,12 @@ class Worker(object):
 		self.map = patches.gen_map(proxy_addr, self.pickler)
 
 	def eval(self, f, *args):
-		print >> sys.stdout, "start.."
 		func = self.pickler.loads(f)
 		func = self.patch(func)
 		args = map(self.pickler.loads, args)
 		print func, args
 		try:
 			res = func(*args)
-			print >> sys.stdout, "end..."
 			return res
 		except Exception, e:
 			print e
