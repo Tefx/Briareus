@@ -10,7 +10,7 @@ def f(x):
 		x += sin(x)
 	return x
 
-#@cloud
+@cloud
 def g(x):
 	return map(f, xrange(30))
 

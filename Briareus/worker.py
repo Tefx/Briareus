@@ -28,13 +28,4 @@ class Worker(object):
 			f.func_globals['map'] = self.map
 		return f
 
-if __name__ == '__main__':
-	def add(a, b):
-		return a+b
-
-	p = epickle.Pickler()
-
-	l = map(p.dumps, (add, 1, 2))
-	print Worker().eval(l[0], *l[1:])
-
 
