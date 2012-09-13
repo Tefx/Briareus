@@ -1,4 +1,5 @@
 import sys  
+sys.path.append('../../Corellia')
 sys.path.append('..')
 from Briareus import cloud
 from math import sin
