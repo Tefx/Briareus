@@ -4,7 +4,7 @@ sys.path.append('..')
 from Briareus import cloud
 
 import random
-num_pre_tests = 500000
+num_pre_tests = 10000000
 num_test = 100
 
 def monteCarlo(num_test):
@@ -16,7 +16,7 @@ def monteCarlo(num_test):
       num_in_circle += 1
   return num_in_circle
 
-#@cloud
+@cloud
 def calcPi():
   num_in_circle = sum(map(monteCarlo,[num_pre_tests]*num_test))
   pi = (4 * num_in_circle) / float(num_pre_tests*num_test)
