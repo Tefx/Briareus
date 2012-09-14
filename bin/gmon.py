@@ -98,7 +98,7 @@ class GuiProxy(QObject):
 		self.widget.treeWidget.clear()
 		for k,v in nodes.iteritems():
 			node = QTreeWidgetItem(self.widget.treeWidget)
-			node.setText(0, str(v['ip']))
+			node.setText(0, str(k))
 			node.setText(1, str(v['cpu_percent']))
 			node.setText(2, str(v['vm_percent']))
 			node.setText(4, beautiful_mem(v['vm_used']))
