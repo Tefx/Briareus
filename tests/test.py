@@ -1,5 +1,4 @@
 import sys  
-sys.path.append('../../Corellia')
 sys.path.append('..')
 from Briareus import cloud
 from math import sin
@@ -7,7 +6,7 @@ from math import sin
 
 #@cloud
 def f(x):
-	for i in xrange(1000000):
+	for i in xrange(30000000):
 		x += sin(x)
 	return x
 

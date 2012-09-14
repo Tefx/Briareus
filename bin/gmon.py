@@ -24,7 +24,6 @@ def beautiful_mem(s):
 def beautiful_percent(s):
 	return str(round(s*100, 2))
 
-
 class Backend(QThread):
 	nodesReady = Signal(dict)
 
@@ -35,7 +34,6 @@ class Backend(QThread):
 	def run(self):
 		while True:
 			nodes = self.agent.fetch()
-			print nodes
 			self.nodesReady.emit(nodes)
 			sleep(5)
 
