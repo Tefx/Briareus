@@ -1,3 +1,5 @@
+from Briareus import cloud
+
 import random
 total_tests = 10000000
 
@@ -14,6 +16,7 @@ def monteCarlo(num_test):
       num_in_circle += 1
   return num_in_circle
 
+@cloud
 def calcPi():
   num_in_circle = monteCarlo(total_tests)
   pi = (4 * num_in_circle) / float(total_tests)
