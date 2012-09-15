@@ -14,6 +14,12 @@
    <string>Briareus</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QLabel" name="label">
      <property name="sizePolicy">
@@ -29,7 +35,10 @@
       </font>
      </property>
      <property name="text">
-      <string>Briareus</string>
+      <string>  Briareus</string>
+     </property>
+     <property name="margin">
+      <number>0</number>
      </property>
     </widget>
    </item>

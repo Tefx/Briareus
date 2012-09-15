@@ -4,7 +4,7 @@ sys.path.append('..')
 from Briareus import cloud
 
 import random
-num_pre_tests = 10000000
+num_pre_tests = 5000000
 num_test = 100
 
 def monteCarlo(num_test):
