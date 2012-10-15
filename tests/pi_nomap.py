@@ -1,3 +1,7 @@
+import sys  
+sys.path.append('../../Corellia')
+sys.path.append('../../Husky')
+sys.path.append('..')
 from Briareus import cloud
 
 import random
@@ -12,6 +16,7 @@ def monteCarlo(num_test):
       num_in_circle += 1
   return num_in_circle
 
+@cloud
 def calcPi():
   num_in_circle = monteCarlo(total_tests)
   return (4 * num_in_circle) / float(total_tests)

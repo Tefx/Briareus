@@ -13,7 +13,7 @@ if __name__ == '__main__':
 
 	node = Node()
 	node.start(CMD, cpu_count())
-	node.connect(("localhost", 10000))
+	node.connect(MONITOR_ADDR)
 
 	gevent.signal(signal.SIGTERM, node.stop)
 	gevent.signal(signal.SIGQUIT, node.stop)
