@@ -1,4 +1,4 @@
-import epickle
+import Husky
 import patches
 import sys
 import types
@@ -6,13 +6,12 @@ import types
 
 class Worker(object):
 	def __init__(self, proxy_addr):
-		self.pickler = epickle.Pickler()
-		self.map = patches.gen_map(proxy_addr, self.pickler)
+		self.map = patches.gen_map(proxy_addr)
 
 	def eval(self, f, *args):
-		func = self.pickler.loads(f)
+		func = Husky.loads(f)
 		func = self.patch(func)
-		args = map(self.pickler.loads, args)
+		args = map(Husky.loads, args)
 		print func, args
 		try:
 			res = func(*args)

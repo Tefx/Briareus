@@ -4,24 +4,20 @@ sys.path.append('..')
 from Briareus import cloud
 
 import random
-num_pre_tests = 5000000
-num_test = 100
+total_tests = 5000000
 
-def monteCarlo(num_test):
-  num_in_circle = 0
-  for _ in xrange(num_test):
+def throw(a):
     x = random.random()
     y = random.random()
-    if x*x + y*y < 1.0:
-      num_in_circle += 1
-  return num_in_circle
+    return x*x + y*y < 1.0
 
 @cloud
+def monteCarlo(num_test):
+  return map(throw, xrange(num_test)).count(True)
+
 def calcPi():
-  num_in_circle = sum(map(monteCarlo,[num_pre_tests]*num_test))
-  pi = (4 * num_in_circle) / float(num_pre_tests*num_test)
-  return pi
+  num_in_circle = monteCarlo(total_tests)
+  return (4 * num_in_circle) / float(total_tests)
 
 if __name__ == '__main__':
-  pi = calcPi()
-  print 'Pi determined to be %s' % pi
+  print calcPi()
