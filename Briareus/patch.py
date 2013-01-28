@@ -7,7 +7,6 @@ import inspect
 
 def setup(only_gen_source=False):
     frame, path, line = inspect.getouterframes(inspect.currentframe())[1][:3]
-    print path
     tree = modify(path, line, only_gen_source)
     if only_gen_source:
         return tree

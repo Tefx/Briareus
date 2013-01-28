@@ -7,7 +7,10 @@ CONF_LOC = ["/etc/briareus.conf",
 
 class Config(object):
     def __init__(self):
-        self.configs = {}
+        self.configs = {"port": 6379,
+                        "queue_name": "Runtime",
+                        "num_greenlet": 100}
+                        
         for f in CONF_LOC:
             if os.path.exists(f):
                 self.parse(f)
