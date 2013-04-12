@@ -2,7 +2,7 @@
 
 在程序的第一行：
 
-    from Briareus import setup; setup()
+    from Briareus import patch; patch()
     
 ## 接口
 
@@ -50,7 +50,6 @@
         "host": "192.168.70.150",    #云平台地址
         "port": 6379,                #可选，云平台端口
         "queue_name": "Runtime",     #可选，云平台队列名称
-        "num_greenlet": 100          #可选，云平台最大并发数
     }
     
 # 示例

@@ -1,10 +1,7 @@
 from gevent import monkey; monkey.patch_all()
-from gevent.pool import Pool
+import gevent
 import inspect
 from ..config import config
-
-
-pool = Pool(config.num_greenlet)
 
 
 def import_globals():
@@ -12,7 +9,11 @@ def import_globals():
     frame.f_globals.update(outerframe.f_globals)
 
 def pmap(f, l):
-    return pool.map(f, l)
+    lets = []
+    for i in l:
+        lets.append(gevent.spawn(f, i))
+    gevent.joinall(lets)
+    return [i.value for i in lets]
 
 def export(ls):
     frame = inspect.getouterframes(inspect.currentframe())[1][0]

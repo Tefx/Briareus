@@ -3,3 +3,7 @@
 .DS_Store
 
 *.log
+
+Briareus.egg-info/*
+build/*
+dist/*

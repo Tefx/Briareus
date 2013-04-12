@@ -1,3 +1,4 @@
+from gevent import monkey; monkey.patch_all()
 from Lazy import LazyDict, AsyncCallable
 from Cloud import utils as CloudUtils
 from Parallel import utils as ParaUtils
@@ -9,9 +10,9 @@ def setup(only_gen_source=False):
     frame, path, line = inspect.getouterframes(inspect.currentframe())[1][:3]
     tree = modify(path, line, only_gen_source)
     if only_gen_source:
-        return tree
+        print tree
+        exit(0)
     new_gloabls = LazyDict(frame.f_globals)
-    # new_gloabls = frame.f_globals.copy()
     new_gloabls.update({"_product" : ParaUtils.product,
                         "_product2" : ParaUtils.product2,
                         "_pmap" : ParaUtils.pmap,

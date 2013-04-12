@@ -7,7 +7,7 @@ requires = ["gevent>=0.13.0", "Corellia>=0.2.4", "Husky>=0.1.0"]
 console_scripts=['Briareus-Worker=Briareus.Cloud.worker:run']
 
 setup(name='Briareus',
-      version='0.4.1',
+      version='0.6.3',
       description='',
       author='Zhu Zhaomeng',
       author_email='zhaomeng.zhu@gmail.com',
