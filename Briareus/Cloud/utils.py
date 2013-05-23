@@ -25,7 +25,7 @@ class Cloud(object):
     def __setstate__(self, state):
         self.f = Husky.loads(state) 
 
-kvstore = KVStore(config.host, "CachedData", serialize=True, interval=0.01)
+kvstore = KVStore(config.host, "CachedData", serialize=False, interval=0.01)
 
 class CachedData(object):
     def __init__(self, var):
@@ -48,13 +48,13 @@ class CachedData(object):
     def put(self, value):
         self.id = uuid1().hex
         value = Husky.dumps(value)
-        kvstore.set(self.id, value, serialize=True)
+        kvstore.set(self.id, value, serialize=False)
 
     def get(self, key):
         res = kvstore.get(key, serialize=False)
-        while not res:
-            sleep(0.01)
-            res = kvstore.get(key, serialize=False)
+        # while not res:
+        #     sleep(0.01)
+        #     res = kvstore.get(key, serialize=False)
         return Husky.loads(res)
 
     def __del__(self):
