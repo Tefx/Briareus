@@ -31,16 +31,18 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h1>使用</h1>
+        <h1>使用/Usage</h1>
 
-<p>在程序的第一行：</p>
+<p>在程序的第一行：<br>
+In the first line of your source:</p>
 
 <pre><code>from Briareus import patch; patch()
 </code></pre>
 
-<h2>接口</h2>
+<h2>接口/Interfaces</h2>
 
-<p>全部使用注释，包括</p>
+<p>全部使用注释，包括<br>
+All interfaces are special comment, including</p>
 
 <pre><code># remote
 
@@ -51,45 +53,50 @@
 
 <h3><code>#remote</code></h3>
 
-<p>使用 <code>#remote</code> 修饰的函数会分发到云平台上计算</p>
+<p>使用 <code>#remote</code> 修饰的函数会分发到云平台上计算<br>
+The functions marked by <code>#remote</code> will be migrating to cloud:</p>
 
 <h3><code>#async</code></h3>
 
-<p>使用 <code>#async</code> 修饰的函数会被异步执行，其后的语句不等待该函数完成即开始执行，但保证需要使用函数返回值式函数已执行完成。</p>
+<p>使用 <code>#async</code> 修饰的函数会被异步执行，其后的语句不等待该函数完成即开始执行，但保证需要使用函数返回值式函数已执行完成。<br>
+A function marked by <code>#async</code> will be called in an asynchronous way. Following functions will be start do not need to wait for this function's finish.</p>
 
 <h3><code>#parallelize</code></h3>
 
-<p>使用<code>#parallelize</code> 修饰的<code>for</code>循环、<code>map</code>调用和列表解析将会被并行执行（使用该注释修饰的循环假设没有数据依赖）。</p>
+<p>使用<code>#parallelize</code> 修饰的<code>for</code>循环、<code>map</code>调用和列表解析将会被并行执行（使用该注释修饰的循环假设没有数据依赖）。<br>
+Any <code>for</code> loop, <code>map</code> loop and list comprehension marked by comment <code>#paralleliz</code> will be evaluated in parallel. BUT IT IS PROGRAMMERS' DUTIES TO MAKE SURE THE LOOPS CAN BE PARALLELIZED.</p>
 
-<p>如果循环中有部分同时使用了<code># remote</code>分发到云平台上计算，可以使用更复杂的形式：</p>
+<p>如果循环中有部分同时使用了<code># remote</code>分发到云平台上计算，可以使用更复杂的形式：<br>
+If there is any function that had been marked by comment <code># remote</code>, there are more complex forms for <code># parallelize</code> like,</p>
 
 <pre><code># parallelize with consts A, B and C
 
 # parallelize with cached R
 </code></pre>
 
-<p>这种情况下，<code>A</code>、<code>B</code>、<code>C</code>、<code>D</code>会被在云平台上缓存。（<code>A</code>、<code>B</code>、<code>C</code>和<code>D</code>需要是常量）</p>
+<p>这种情况下，<code>A</code>、<code>B</code>、<code>C</code>、<code>D</code>会被在云平台上缓存。（<code>A</code>、<code>B</code>、<code>C</code>和<code>D</code>需要是常量）<br>
+In these examples, variants <code>A</code>, <code>B</code>, <code>C</code> and <code>D</code> will be cached un the cloud platform (assuming these variants are constant).</p>
 
-<h1>配置</h1>
+<h1>配置/Configuration</h1>
 
-<h2>配置文件位置</h2>
+<h2>配置文件位置/Location of configuration files.</h2>
 
-<p>按顺序从以下位置读取配置文件，后一个位置配置文件中的项覆盖之前的配置</p>
+<p>按顺序从以下位置读取配置文件，后一个位置配置文件中的项覆盖之前的配置<br>
+Brareus read the configurations form below locations sequentially.</p>
 
 <ol>
 <li>/etc/briareus.conf</li>
 <li>~/.briareus.conf</li>
 <li>./briareus.conf</li>
-</ol><h2>配置文件格式</h2>
+</ol><h2>配置文件格式/Format of configuration files</h2>
 
 <pre><code>{
-    "host": "192.168.70.150",    #云平台地址
-    "port": 6379,                #可选，云平台端口
-    "queue_name": "Runtime",     #可选，云平台队列名称
+    "host": "192.168.70.150",    #Address of cloud platform
+    "port": 6379,                #Optional, port of Briareus
 }
 </code></pre>
 
-<h1>示例</h1>
+<h1>示例/Examples</h1>
 
 <pre><code># remote
 def foo(…):
@@ -98,7 +105,7 @@ def foo(…):
 foo()
 </code></pre>
 
-<p><code>foo()</code>将分发到远程进行</p>
+<p><code>foo()</code>将分发到远程进行<br><code>foo()</code> will be migrated to remote cloud platform</p>
 
 <pre><code># async
 def foo1(…):
@@ -115,14 +122,15 @@ c = foo2(…)
 bar(a, b, c)
 </code></pre>
 
-<p><code>a=foo1(…)</code>，<code>b=foo2(…)</code>和<code>c = foo2(…)</code>将并行（异步）进行，<code>bar(a,b,c)</code>则等待<code>a</code>、<code>b</code>、<code>c</code>的求值都完成之后再进行。</p>
+<p><code>a=foo1(…)</code>，<code>b=foo2(…)</code>和<code>c = foo2(…)</code>将并行（异步）进行，<code>bar(a,b,c)</code>则等待<code>a</code>、<code>b</code>、<code>c</code>的求值都完成之后再进行。<br><code>a=foo1(…)</code>，<code>b=foo2(…)</code> and <code>c = foo2(…)</code> will be evaluated at the same time, and the evaluation of <code>bar(a,b,c)</code> will be started after all of <code>a</code>, <code>b</code> and <code>c</code> being calculated.</p>
 
 <pre><code>#parallelize
 for … in …:
     …
 </code></pre>
 
-<p><code>for</code>循环将并行进行。</p>
+<p><code>for</code>循环将并行进行。<br>
+The <code>for</code> loop will be evaluated in parallel.</p>
 
 <pre><code>#remote
 def func(A):
@@ -135,7 +143,8 @@ for … in …:
     …
 </code></pre>
 
-<p><code>for</code>循环将并行执行，其中<code>func(a)</code>将被（并行）分发到云平台执行，a会在云平台被缓存。</p>
+<p><code>for</code>循环将并行执行，其中<code>func(a)</code>将被（并行）分发到云平台执行，a会在云平台被缓存。<br>
+The <code>for</code> loop will be evaluated in parallel, the evaluation of <code>func(q)</code> will be migrated to cloud, and const <code>a</code> will be cached in cloud.</p>
       </section>
     </div>
 
