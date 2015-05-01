@@ -1,7 +1,7 @@
 # 使用/Usage
 
 在程序的第一行：   
-In first line of your source:
+In the first line of the source, add:
 
     from Briareus import patch; patch()
     
