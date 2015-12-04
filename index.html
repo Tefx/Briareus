@@ -1,166 +1,219 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Briareus : Accelerating Python Applications using Cloud">
+    <title>Briareus by Tefx</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Briareus</title>
   </head>
-
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/Tefx/Briareus">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/Tefx/Briareus/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/Tefx/Briareus/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/Tefx/Briareus">View on GitHub</a>
+    <div class="wrapper">
 
-          <h1 id="project_title">Briareus</h1>
-          <h2 id="project_tagline">Accelerating Python Applications using Cloud</h2>
+      <section>
+        <div id="title">
+          <h1>Briareus</h1>
+          <p>Accelerating Python Applications using Cloud</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/Tefx">Tefx</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/Tefx/Briareus/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/Tefx/Briareus/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
+        <p><strong>This is only a prototype project and it is not suitable for production environments!</strong></p>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
+<p><strong>This document is to show you what Briareus can do, but not how to use it. If you are going to use Briareus, please contact me (<a href="mailto:zhaomeng.zhu@gmail.com">zhaomeng.zhu@gmail.com</a>) for more details. Thank you!</strong></p>
 
-<p>In the first line of your source:</p>
+<h1>
+<a id="about" class="anchor" href="#about" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h1>
+
+<p>Briareus aims to speed up python applications using distributed platforms like Cloud. It can automatically parallelize loops (including the <code>for</code> loops, list comprehensions and the <code>map</code> function), making functions asynchronous, or migrate functions to be evaluated in remote servers. To achieve these goals, only minimal modifications of the source code is needed.</p>
+
+<p>This repo only contains the code related to the interfaces and code transformations. The distributed framework used and the task queue are in <a href="https://github.com/Tefx/Corellia">Corellia</a>, and the serialization part is in <a href="https://github.com/Tefx/Husky">Husky</a>.</p>
+
+<h1>
+<a id="installation-and-deployment" class="anchor" href="#installation-and-deployment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation and deployment</h1>
+
+<p>Please contact me via <a href="mailto:zhaomeng.zhu@gmail.com">zhaomeng.zhu@gmail.com</a></p>
+
+<h1>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h1>
+
+<p>To use Briareus, a patch in the first line of the source file (the <code>__main__</code> file) is required:</p>
 
 <pre><code>from Briareus import patch; patch()
 </code></pre>
 
-<h2>
-<a id="interfaces" class="anchor" href="#interfaces" aria-hidden="true"><span class="octicon octicon-link"></span></a>Interfaces</h2>
+<p>This monkey patch will release the power of Briareus!</p>
 
-<p>All interfaces are special comment, including</p>
+<p>There are three operations provided by Briareus, and all of them are enabled by comments:</p>
 
 <pre><code># remote
-
 # async
-
 # parallelize
 </code></pre>
 
-<h3>
-<a id="remote" class="anchor" href="#remote" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>#remote</code>
-</h3>
+<p><em>Why we use comments?</em></p>
 
-<p>The functions marked by <code>#remote</code> will be migrating to cloud:</p>
+<p><em>Because by this way, the behavior of the program will not be changed if <code>patch()</code> is not applied, or if the target platforms is not available.</em></p>
 
-<h3>
-<a id="async" class="anchor" href="#async" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>#async</code>
-</h3>
+<p>The <code># remote</code> makes a following function's evaluations be migrated to remote servers. For example,</p>
 
-<p>A function marked by <code>#async</code> will be called in an asynchronous way. Following functions will be start do not need to wait for this function's finish.</p>
+<pre><code>from Briareus import patch; patch()
 
-<h3>
-<a id="parallelize" class="anchor" href="#parallelize" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>#parallelize</code>
-</h3>
+# remote
+def foo(a, b):
+  return a+b
 
-<p>Any <code>for</code> loop, <code>map</code> loop and list comprehension marked by comment <code>#paralleliz</code> will be evaluated in parallel. BUT IT IS PROGRAMMERS' DUTIES TO MAKE SURE THE LOOPS CAN BE PARALLELIZED.</p>
-
-<p>If there is any function that had been marked by comment <code># remote</code>, there are more complex forms for <code># parallelize</code> like,</p>
-
-<pre><code># parallelize with consts A, B and C
-
-# parallelize with cached R
+print "1+2=%d" % foo(1,2)
 </code></pre>
 
-<p>In these examples, variants <code>A</code>, <code>B</code>, <code>C</code> and <code>D</code> will be cached un the cloud platform (assuming these variants are constant).</p>
+<p>Here, the evaluation of <code>1+2</code> will be calculated in a pre-configured remote server. However, the other part of the program still run locally.</p>
 
-<h1>
-<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h1>
+<p>The <code># async</code> makes a following function asynchronous. For example,</p>
 
-<h2>
-<a id="location-of-configuration-files" class="anchor" href="#location-of-configuration-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Location of configuration files.</h2>
-
-<p>Brareus read the configurations form below locations sequentially.</p>
-
-<ol>
-<li>/etc/briareus.conf</li>
-<li>~/.briareus.conf</li>
-<li>./briareus.conf</li>
-</ol>
-
-<h2>
-<a id="format-of-configuration-files" class="anchor" href="#format-of-configuration-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Format of configuration files</h2>
-
-<pre><code>{
-    "host": "192.168.70.150",    #Address of cloud platform
-    "port": 6379,                #Optional, port of Briareus
-}
-</code></pre>
-
-<h1>
-<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h1>
-
-<pre><code># remote
-def foo(…):
-    …
-
-foo()
-</code></pre>
-
-<p><code>foo()</code> will be migrated to remote cloud platform</p>
-
-<pre><code># async
-def foo1(…):
-    …
+<pre><code>from Briareus import patch; patch()
 
 # async
-def foo2(…):
-    …
+def foo1(...):
+    ...
+    ...
 
-a = foo1(…)
-b = foo2(…)
-c = foo2(…)
+a = foo1(...)
+b = foo1(...)
 
-bar(a, b, c)
+bar(a, b)
 </code></pre>
 
-<p><code>a = foo1(…)</code>, <code>a = foo2(…)</code> and <code>c = foo2(…)</code> will be evaluated at the same time, and the evaluation of <code>bar(a,b,c)</code> will be started after all of <code>a</code>, <code>b</code> and <code>c</code> being calculated.</p>
+<p>Here, the evaluation of <code>b</code> starts without waiting for the finish of the evaluation of <code>a</code>. However, <code>bar(a,b)</code> will not start until both the evaluations of <code>a</code> and <code>b</code> has finished.</p>
 
-<pre><code>#parallelize
-for … in …:
-    …
+<p>Of course, this comment can be used together with <code># remote</code>:</p>
+
+<pre><code>from Briareus import patch; patch()
+
+# async
+# remote
+def foo1(...):
+    ...
+
+# async
+# remote
+def foo2(...):
+    ...
+
+a = foo1(...)
+b = foo2(...)
+
+bar(a, b)
 </code></pre>
 
-<p>The <code>for</code> loop will be evaluated in parallel.</p>
+<p>Now, <code>a</code> and <code>b</code> is evaluated simultaneously in the configured distributed environment!</p>
 
-<pre><code>#remote
-def func(A):
-    …
+<p>Finally, <code># parallelize</code> parallelizes a following <code>for</code> loop, <code>map</code> invocation and <em>list comprehension</em>:</p>
 
-#parallelize with cached a
-for … in …:
-    …
-    func(a)
-    …
+<pre><code>from Briareus import patch; patch()
+
+# paralleliz
+for a in l:
+    do_something(a)
+
+# paralleliz
+for a,b,c in l:
+    do_something(a)
+    do_other_thing(b,c)
+
+# paralleliz
+for a in l0:
+    for b in l1:
+        for c in l2:
+            do_something(a,b,c)
+
+# parallelize
+after = map(foo, l)
+
+# parallelize
+new_list = [x*2 for x in l if x &gt; 0]
+
+# parallelize
+new_list2 = [x*y+z for x in l0 if x&gt;0 \
+                   for y in l1 if y&gt;0 \
+                   for z in l3]
 </code></pre>
 
-<p>The <code>for</code> loop will be evaluated in parallel, the evaluation of <code>func(q)</code> will be migrated to cloud, and const <code>a</code> will be cached in cloud.</p>
+<p>All of the above loops are parallelized!</p>
+
+<p>Now, combine the use of <code># remote</code> and <code># parallelize</code> in a real-world example implementing the OMP algorithm:</p>
+
+<pre><code>from Briareus import patch; patch()
+import numpy as np
+from scipy
+import sparse
+
+# remote
+def OMP(s, T, N):
+    body_of_OMP
+
+def recovery_image(a, b, Y, R, ww):
+    X = np.zeros((a, b))
+
+    # parallelize with const R
+    for i in xrange(b):
+        X[:,i] = OMP(Y[:,i].reshape((-1,1)), R, a)
+        X1 = ww.H * sparse.csr_matrix(X) * ww
+
+    return X1.toarray()
+
+if __name__ == "__main__":
+    a, b, Y, R, ww, original =
+    perpare_image()
+    recovered = recovery_image(a, b, Y, R, ww, original)
+    errorx = (np.absolute(recovered - original) ** 2).sum()
+    psnr = 10 * np.log10(255 * 255 / (errorx / a / b))
+
+    return psnr
+</code></pre>
+
+<p>Great! The algorithm has been parallelized in a distributed environment!</p>
+
+<p>You may notice that here we use a slightly different comment <code># paralleliz with const R</code>. This comment distributes and caches the large variable <code>R</code> in distributed workers. Of course, there can be more than one cached variables:</p>
+
+<pre><code># parallelize with const a
+
+# parallelize with const a, b, c
+
+# parallelize with const a, b and c
+</code></pre>
+
+<p>or, if you like,</p>
+
+<pre><code># parallelize with cached a
+
+# parallelize with cached a, b, c
+
+# parallelize with cached a, b and c
+</code></pre>
       </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Briareus maintained by <a href="https://github.com/Tefx">Tefx</a></p>
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
-      </footer>
     </div>
-
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
-
   </body>
 </html>
